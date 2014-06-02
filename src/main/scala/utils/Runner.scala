@@ -66,7 +66,7 @@ object Runner {
   }
 
   def main(args: Array[String]) {
-    //System.setProperty("java.net.preferIPv4Stack", "true")
+    System.setProperty("java.net.preferIPv4Stack", "true")
     printHelp()
     val nick = {
       readNick match {

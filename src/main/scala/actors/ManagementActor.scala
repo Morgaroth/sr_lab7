@@ -27,7 +27,7 @@ object ManagementActor {
     val channel = new JChannel(false)
     val udp = address match {
       case null => new UDP()
-      case _ => new UDP() //.setValue("mcast_group_addr", InetAddress.getByName(address))
+      case _ => new UDP().setValue("mcast_group_addr", InetAddress.getByName(address))
     }
     val stack = new ProtocolStack()
     channel.setProtocolStack(stack)
@@ -49,14 +49,8 @@ object ManagementActor {
       .addProtocol(new FLUSH())
     stack.init()
     channel.setReceiver(listener)
-    address match {
-      case null =>
-        channel.connect(name)
-      case _ =>
-//        channel.setName(name)
-//        channel.connect(address)
-        channel.connect(name)
-    }
+    channel.setName(name)
+    channel.connect(name)
     channel
   }
 
@@ -67,9 +61,8 @@ class ManagementActor extends MyReceiver with Actor with ActorLogging {
 
   val managementChannel = {
     try {
-      val channel = getChannel("ChatManagement768264", this, "228.8.8.8")
+      val channel = getChannel("ChatManagement768264", this)
       channel.getState(null, 10000)
-      log.error("!!--OK--!!")
       channel
     } catch {
       case e: Throwable => e.printStackTrace()
