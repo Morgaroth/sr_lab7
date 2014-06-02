@@ -53,9 +53,9 @@ object ManagementActor {
       case null =>
         channel.connect(name)
       case _ =>
-        channel.setName(name)
-        channel.connect(address)
-//        channel.connect(name)
+//        channel.setName(name)
+//        channel.connect(address)
+        channel.connect(name)
     }
     channel
   }
