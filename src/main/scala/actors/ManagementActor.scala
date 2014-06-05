@@ -23,7 +23,7 @@ object ManagementActor {
   private lazy val system = ActorSystem("chat")
   lazy val actor = system.actorOf(Props[ManagementActor])
 
-  def getChannel(name: String, listener: ReceiverAdapter, address: String = null,management: Boolean=false) = {
+  def getChannel(name: String, listener: ReceiverAdapter, address: String = null, management: Boolean = false) = {
     val channel = new JChannel(false)
     val udp = address match {
       case null => new UDP()
@@ -50,11 +50,11 @@ object ManagementActor {
     stack.init()
     channel.setReceiver(listener)
     channel.setName(name)
-    if(management){
+    if (management) {
       channel.connect("ChatManagement768264")
-      }else{
-      channel.connect(address)  
-      }
+    } else {
+      channel.connect(address)
+    }
     channel
   }
 
@@ -65,7 +65,7 @@ class ManagementActor extends MyReceiver with Actor with ActorLogging {
 
   val managementChannel = {
     try {
-      val channel = getChannel("mateusz", this,null,true)
+      val channel = getChannel("mateusz", this, null, true)
       channel.getState(null, 10000)
       channel
     } catch {
@@ -98,7 +98,7 @@ class ManagementActor extends MyReceiver with Actor with ActorLogging {
 
     case SetChannels(ch) =>
       channels = ch
-      //log.info("state setted " + channels.mapValues(_.mkString("{", ",", "}")).mkString("[", ",", "]"))
+    //log.info("state setted " + channels.mapValues(_.mkString("{", ",", "}")).mkString("[", ",", "]"))
 
     case v: View =>
 
