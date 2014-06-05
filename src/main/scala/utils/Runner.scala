@@ -67,6 +67,8 @@ object Runner {
 
   def main(args: Array[String]) {
     System.setProperty("java.net.preferIPv4Stack", "true")
+    //org.apache.log4j.Logger l = org.apache.log4j.Logger.getLogger("org")
+    //l.setLevel(org.apache.log4j.ERROR)
     printHelp()
     val nick = {
       readNick match {

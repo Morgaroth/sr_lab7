@@ -23,7 +23,7 @@ object ManagementActor {
   private lazy val system = ActorSystem("chat")
   lazy val actor = system.actorOf(Props[ManagementActor])
 
-  def getChannel(name: String, listener: ReceiverAdapter, address: String = null) = {
+  def getChannel(name: String, listener: ReceiverAdapter, address: String = null,management: Boolean=false) = {
     val channel = new JChannel(false)
     val udp = address match {
       case null => new UDP()
@@ -50,7 +50,11 @@ object ManagementActor {
     stack.init()
     channel.setReceiver(listener)
     channel.setName(name)
-    channel.connect(name)
+    if(management){
+      channel.connect("ChatManagement768264")
+      }else{
+      channel.connect(address)  
+      }
     channel
   }
 
@@ -61,7 +65,7 @@ class ManagementActor extends MyReceiver with Actor with ActorLogging {
 
   val managementChannel = {
     try {
-      val channel = getChannel("ChatManagement768264", this)
+      val channel = getChannel("mateusz", this,null,true)
       channel.getState(null, 10000)
       channel
     } catch {
