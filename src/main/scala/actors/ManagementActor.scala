@@ -98,7 +98,7 @@ class ManagementActor extends MyReceiver with Actor with ActorLogging {
 
     case SetChannels(ch) =>
       channels = ch
-      log.info("state setted " + channels.mapValues(_.mkString("{", ",", "}")).mkString("[", ",", "]"))
+      //log.info("state setted " + channels.mapValues(_.mkString("{", ",", "}")).mkString("[", ",", "]"))
 
     case v: View =>
 

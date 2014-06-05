@@ -28,7 +28,7 @@ class ChannelActor extends MyReceiver with Actor with ActorLogging {
       println(s"\n-----------------------------\nRECEIVED: ${msg.`message`}\n-----------------------")
 
     case ChannelActor.Send(msg) =>
-      channel.send(ChatMessage(`message` = msg))
+      channel.send(ChatMessage(`message` = s"<$nick> $msg"))
 
     case ChannelInit(channelName, nickname) =>
       channel = ManagementActor.getChannel(nickname, this,channelName)
